@@ -2,10 +2,14 @@ import React, { useState, useContext, useCallback } from "react";
 import { Item } from "./types";
 import NoteView from "./noteView";
 import DirectoryView from "./directoryView";
+import { format } from "date-fns";
+
+import AddressBar from "../components/addressBar";
 
 import _ from "lodash";
 
 import "../styles/workspace.css";
+import Playground from "./playground";
 
 function ItemView(item: Item) {
   const { setCurrentItem, path, setPath } = useContext(WorkspaceContext);
@@ -17,10 +21,10 @@ function ItemView(item: Item) {
     }
 
     setCurrentItem(item.parent);
-    setPath(prevPath => {
-        const newPath = [...prevPath];
-        newPath.pop();
-        return newPath;
+    setPath((prevPath) => {
+      const newPath = [...prevPath];
+      newPath.pop();
+      return newPath;
     });
   }, [item, setCurrentItem]);
 
@@ -28,20 +32,9 @@ function ItemView(item: Item) {
     <div className="bg-white p-4 border border-gray-300 w-full h-full">
       <h2>Current Item: {item.name}</h2>
       <h3>Type: {item.type}</h3>
-      <div className="breadcrumbs">
-        <strong>Path:</strong>{" "}
-        {path.map((segment, index) => (
-          <span key={index}>
-            {segment}
-            {index < path.length - 1 && " > "}
-          </span>
-        ))}
-      </div>
       <div className="item">
-        {item.parent != null && (
-          <button onClick={goToEnclosingFolder}>Previous Directory</button>
-        )}
-        {item.type == "directory" && <DirectoryView directory={item} />}
+        {/* {item.type == "directory" && <DirectoryView directory={item} />} */}
+        {item.type == "directory" && <Playground directory={item} item={item} path={path} goToEnclosingFolder={goToEnclosingFolder} />}
         {item.type == "note" && <NoteView note={item} />}
       </div>
     </div>
@@ -84,12 +77,14 @@ export function Workspace() {
     setCurrentItem((prevItem) => {
       // Deep clone the item
       const newItem = _.cloneDeep(prevItem);
+      const formattedDate = format(new Date(), "MM/dd/yyyy h:mm a");
       if (newItem.type === "directory") {
         const newNote: Item = {
           type: "note",
           name: fileName,
           note: noteText,
           parent: newItem,
+          dateModified: formattedDate,
         };
         newItem.items = newItem.items ? [...newItem.items, newNote] : [newNote];
       }
@@ -146,12 +141,14 @@ export function Workspace() {
     setCurrentItem((prevItem) => {
       // Deep clone the item
       const newItem = _.cloneDeep(prevItem);
+      const formattedDate = format(new Date(), "MM/dd/yyyy h:mm a");
       if (newItem.type === "directory") {
         const newDir: Item = {
           type: "directory",
           name: newDirName,
           items: [],
           parent: newItem,
+          dateModified: formattedDate,
         };
         newItem.items = newItem.items ? [...newItem.items, newDir] : [newDir];
       }
