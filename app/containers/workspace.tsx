@@ -25,7 +25,7 @@ function ItemView(item: Item) {
   }, [item, setCurrentItem]);
 
   return (
-    <div>
+    <div className="bg-white p-4 border border-gray-300 w-full h-full">
       <h2>Current Item: {item.name}</h2>
       <h3>Type: {item.type}</h3>
       <div className="breadcrumbs">
