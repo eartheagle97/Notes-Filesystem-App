@@ -5,6 +5,9 @@ import DirectoryView from "../components/directoryView";
 import AddressBar from "../components/addressBar";
 import SideTaskItem from "../components/SideTaskItem";
 import { format } from "date-fns";
+import Modal from "react-modal";
+import NoteView from "./noteView";
+import Image from "next/image";
 
 interface PlaygroundProps {
   directory: Item;
@@ -30,11 +33,22 @@ const Playground: React.FC<PlaygroundProps> = ({
 
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (directory?.type === "note") {
+      setIsModalOpen(true);
+    }
+  }, [directory]);
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentDate(new Date());
-    }, 60000); // Update every 60 seconds (1 minute)
+    }, 10000); // Update every 10 seconds
 
     return () => clearInterval(intervalId); // Cleanup on component unmount
   }, []);
@@ -173,9 +187,9 @@ const Playground: React.FC<PlaygroundProps> = ({
             className="title-bar"
             style={{ paddingTop: 18, paddingBottom: 18 }}
           >
-            <div className="title-bar-text text-[16px]">
-              Quilt Labs Notes Filesystem App &gt;&gt; ({item?.name} :{" "}
-              {item?.type})
+            <div className="title-bar-text text-[16px] ml-2">
+              <label className="text-sm">Quilt Labs Notes Filesystem App &gt;&gt; ({item?.name} :{" "}
+              {item?.type})</label>
             </div>
             <div className="title-bar-controls">
               {windowButtons?.map((button, idx) => (
@@ -191,11 +205,11 @@ const Playground: React.FC<PlaygroundProps> = ({
         </div>
         <div className="navbar border">
           {/* File Menu */}
-          <div>
+          <div className="bg-[#EEECDD]">
             <div className="flex">
               <div>{leftDots(4)}</div>
               {menuOptions?.map((item, idx) => (
-                <label key={idx} className="mx-2">
+                <label key={idx} className="text-xs mx-2">
                   {item}
                 </label>
               ))}
@@ -204,6 +218,7 @@ const Playground: React.FC<PlaygroundProps> = ({
           {/* Actions Buttons & Address Bar */}
           <div>
             <AddressBar
+              leftDots={leftDots}
               selectedItems={selectedItems}
               deleteSelectedItems={deleteSelectedItems}
               handleAddDirectory={handleAddDirectory}
@@ -217,10 +232,13 @@ const Playground: React.FC<PlaygroundProps> = ({
         <div className="grid grid-cols-4 main-layout h-[75vh]">
           <div className="col-span-1 border ">
             <div
-              className="p-10 h-[75vh]"
+              className="p-5 h-[75vh]"
               style={{ backgroundColor: "#7da7f0" }}
             >
-              <SideTaskItem />
+              <SideTaskItem
+                handleAddDirectory={handleAddDirectory}
+                handleAddNote={handleAddNote}
+              />
             </div>
           </div>
           <div className="col-span-3 border">
@@ -237,14 +255,35 @@ const Playground: React.FC<PlaygroundProps> = ({
         </div>
         {/* Start Bar */}
         <div className="title-bar !h-[5.75vh]">
-          <div className="flex items-center h-[5.25vh] w-[100px] rounded !bg-green-600 text-white text-xl">
-            <p className="w-[100px] text-center">Start</p>
+          <div className="flex items-center h-[100%] w-[100px] rounded !bg-green-600 text-white text-xl">
+            <div className="flex items-center ml-2">
+              <Image
+                src={"/assets/img/start-menu.png"}
+                alt={"Start Menu Icon"}
+                width={25}
+                height={25}
+              />
+              <label className="text-lg ml-2">Start</label>
+            </div>
           </div>
-          <div className="flex items-center text-white text-md">
-            <p className="mr-2 text-center">{formattedDate}</p>
+          <div className="flex items-center justify-center h-[100%] w-[200px] bg-[#0F89E2] ">
+            <label className="text-white text-sm">{formattedDate}</label>
           </div>
         </div>
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        contentLabel="Edit Note"
+        ariaHideApp={false}
+      >
+        <NoteView
+          note={directory}
+          closeModal={closeModal}
+          setCurrentItem={setCurrentItem}
+          item={item}
+        />
+      </Modal>      
     </>
   );
 };

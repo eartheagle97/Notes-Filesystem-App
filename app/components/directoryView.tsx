@@ -1,9 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { Item } from "../containers/types";
-import { FiFolder, FiFileText, FiTrash2, FiEdit } from "react-icons/fi";
-import FileFolder from "../static/icons/explorer_folder.png";
-import Notepad from "../static/icons/notepad-1.png";
+import { FiTrash2, FiEdit } from "react-icons/fi";
 
 interface DirectoryViewProps {
   directory: Item;
@@ -13,6 +11,13 @@ interface DirectoryViewProps {
   selectedItems: any;
   toggleSelection: any;
   deleteSelectedItems: any;
+}
+
+interface RightClickItem {
+  name: string;
+  icon: string;
+  onclick?: () => void;
+  underline: string | boolean;
 }
 
 const DirectoryView: React.FC<DirectoryViewProps> = ({
@@ -74,18 +79,87 @@ const DirectoryView: React.FC<DirectoryViewProps> = ({
   );
   const sortedNotes = notes.sort((a, b) => a.name.localeCompare(b.name));
 
+  const rightclick = [
+    {
+      name: "Open",
+      icon: "",
+      underline: "",
+    },
+    {
+      name: "Explore",
+      icon: "",
+      underline: "",
+    },
+    {
+      name: "Extract files...",
+      icon: "/assets/img/winrar.png",
+      underline: "",
+    },
+    {
+      name: "Extract Here",
+      icon: "/assets/img/winrar.png",
+      underline: "",
+    },
+    {
+      name: "Extract to...",
+      icon: "/assets/img/winrar.png",
+      underline: true,
+    },
+    {
+      name: "Send to",
+      icon: "",
+      underline: true,
+    },
+    {
+      name: "Cut",
+      icon: "",
+      underline: "",
+    },
+    {
+      name: "Copy",
+      icon: "",
+      underline: true,
+    },
+    {
+      name: "Create Shortcut",
+      icon: "",
+      underline: "",
+    },
+    {
+      name: "Delete",
+      icon: "",
+      onclick: () => {
+        handleDeleteItems(contextMenu.selectedItem);
+      },
+      underline: "",
+    },
+    {
+      name: "Rename",
+      icon: "",
+      onclick: () => {
+        handleRenameItem(contextMenu.selectedItem);
+      },
+      underline: true,
+    },
+    {
+      name: "Properties",
+      icon: "",
+      underline: "",
+    },
+  ];
+
   return (
     <>
       <table className="w-full">
-        <thead className="bg-[#EFECDE] text-sm text-left">
+        <thead className="bg-[#EFECDE] text-sm text-left drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
           <tr className="">
             <th className="w-8 px-3 border-r border-[#D4D0C3]"></th>
-            <th className="w-1/2 py-2 font-normal border-r border-[#D4D0C3] pl-2">
-              Name
+            <th className="w-1/2 py-1 font-normal border-r border-[#D4D0C3] pl-2">
+            <label>Name</label>
             </th>
-            <th className="font-normal border-r border-[#D4D0C3] pl-2">Type</th>
+            <th className="font-normal border-r border-[#D4D0C3] pl-2"><label>Type</label></th>
             <th className="font-normal border-r border-[#D4D0C3] pl-2">
-              Date Modified
+              <label>Date Modified</label>
             </th>
             <th className="font-normal pl-2 md:hidden">Actions</th>
           </tr>
@@ -93,7 +167,7 @@ const DirectoryView: React.FC<DirectoryViewProps> = ({
         <tbody>
           {sortedDirectories.concat(sortedNotes).map((childItem, index) => (
             <tr className="dirItem hover:bg-transparent" key={index}>
-              <td className="w-8 px-3 whitespace-nowrap">
+              <td className="w-8 px-3 py-2 whitespace-nowrap">
                 <input
                   type="checkbox"
                   className="form-checkbox h-3 w-3"
@@ -108,20 +182,30 @@ const DirectoryView: React.FC<DirectoryViewProps> = ({
               >
                 <div className="flex items-center">
                   {childItem.type === "directory" ? (
-                    <Image src={FileFolder} alt="File Folder" />
+                    <Image
+                      src={"/assets/img/explorer_folder.png"}
+                      alt="File Folder"
+                      width={15}
+                      height={15}
+                    />
                   ) : (
-                    <Image src={Notepad} alt="Text Document" />
+                    <Image
+                      src={"/assets/img/notepad.png"}
+                      alt="Text Document"
+                      width={15}
+                      height={15}
+                    />
                   )}
-                  <p className="text-sm ml-1">{childItem.name}</p>
+                  <label className="text-sm ml-1">{childItem.name}</label>
                 </div>
               </td>
               <td>
-                <p className="text-sm mx-2">
+                <label className="text-sm mx-2">
                   {childItem.type === "note" ? "Text Document" : "File Folder"}
-                </p>
+                </label>
               </td>
               <td>
-                <p className="text-sm mx-2">{childItem.dateModified}</p>
+                <label className="text-sm mx-2">{childItem.dateModified}</label>
               </td>
               <td className="px-6 py-4 whitespace-nowrap md:hidden">
                 <button
@@ -150,26 +234,41 @@ const DirectoryView: React.FC<DirectoryViewProps> = ({
             top: `${contextMenu.y}px`,
             left: `${contextMenu.x}px`,
             zIndex: 1000,
-            background: "#F1F1F1",
-            border: "1px solid rgba(0, 0, 0, 0.2)",
-            boxShadow: "3px 3px 10px rgba(0, 0, 0, 0.2)",
-            width: "150px",
+            background: "#ffffff",
+            border: "1px solid rgba(0, 0, 0, 0.6)",
+            boxShadow: "4px 4px 3px rgba(0, 0, 0, 0.3)",
+            width: "200px",
           }}
           ref={contextMenuRef}
           onClick={closeContextMenu}
         >
-          <div
-            className="ml-3 my-1 text-sm"
-            onClick={() => handleRenameItem(contextMenu.selectedItem)}
-          >
-            Rename
-          </div>
-          <div
-            className="ml-3 my-1 text-sm"
-            onClick={() => handleDeleteItems(contextMenu.selectedItem)}
-          >
-            Delete
-          </div>
+          {rightclick.map((item, index) => {
+            return (
+              <>
+                <div className={`flex items-center hover:bg-[#f1f1f1]`}>
+                  {item.icon ? (
+                    <Image
+                      className="absolute ml-1.5"
+                      src={item.icon}
+                      alt={item.name}
+                      width={20}
+                      height={20}
+                    />
+                  ) : (
+                    ""
+                  )}
+                  <label className={`ml-8 my-1 text-sm`} onClick={item.onclick}>
+                    {item.name}
+                  </label>
+                </div>
+                {item.underline ? (
+                  <div className="border-b my-1 border-gray-300"></div>
+                ) : (
+                  ""
+                )}
+              </>
+            );
+          })}
         </div>
       )}
     </>

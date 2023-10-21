@@ -1,10 +1,7 @@
 import React, { useState, useContext, useCallback } from "react";
 import { Item } from "./types";
 import NoteView from "./noteView";
-import DirectoryView from "./directoryView";
 import { format } from "date-fns";
-
-import AddressBar from "../components/addressBar";
 
 import _ from "lodash";
 
@@ -30,15 +27,13 @@ function ItemView(item: Item) {
 
   return (
     <>
-      {item.type == "directory" && (
-        <Playground
-          directory={item}
-          item={item}
-          path={path}
-          goToEnclosingFolder={goToEnclosingFolder}
-        />
-      )}
-      {item.type == "note" && <NoteView note={item} />}
+      <Playground
+        directory={item}
+        item={item}
+        path={path}
+        goToEnclosingFolder={goToEnclosingFolder}
+      />
+      {/* {item.type == "note" && <NoteView note={item} />} */}
     </>
   );
 }
@@ -166,7 +161,16 @@ export function Workspace() {
       }
       return newItem;
     });
+    setCurrentItem((prevItem) => {
+      if (prevItem?.parent?.type === 'directory') {
+        return _.cloneDeep(prevItem.parent);
+      }
+      return _.cloneDeep(prevItem);
+    });
+    
   }, []);
+
+  console.log(currentItem)
 
   return (
     <div className="workspace">
