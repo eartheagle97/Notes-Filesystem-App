@@ -39,6 +39,7 @@ const Playground: React.FC<PlaygroundProps> = ({
   };
 
   const handleAddDirectory = () => {
+    console.log("CLicked")
     const dirName = window.prompt("Enter the name of the new directory:");
     if (dirName === null) return;
     if (
@@ -59,6 +60,7 @@ const Playground: React.FC<PlaygroundProps> = ({
   };
 
   const handleAddNote = () => {
+    console.log("CLicked")
     const fileName = window.prompt("Enter the name of the new note:");
     if (fileName === null) return;
     if (

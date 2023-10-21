@@ -48,14 +48,14 @@ const AddressBar: React.FC<AddressBarProps> = ({
             alt="Back Button"
             label=""
             className={"rotate-180 grayscale ml-2"}
-            disabled={true}
+            disabled={false}
           />
           <IconTextButton
             src={HomeDirectory}
             alt="Root Directory"
             label="Root Directory"
             className={"text-sm ml-2"}
-            disabled={true}
+            disabled={false}
           />
         </div>
         <div className="flex items-center pr-4 border-r-2 border-gray-300">
@@ -64,7 +64,7 @@ const AddressBar: React.FC<AddressBarProps> = ({
             alt="Search"
             label="Search"
             className={"text-sm ml-2"}
-            disabled={true}
+            disabled={false}
           />
           <IconTextButton
             onClick={handleAddDirectory}
@@ -72,7 +72,7 @@ const AddressBar: React.FC<AddressBarProps> = ({
             alt="Create New Folder"
             label="New Directory"
             className={"text-sm ml-2"}
-            disabled={true}
+            disabled={false}
           />
           <IconTextButton
             onClick={handleAddNote}
@@ -80,7 +80,7 @@ const AddressBar: React.FC<AddressBarProps> = ({
             alt="Create New File"
             label="New File"
             className={"text-sm ml-2"}
-            disabled={true}
+            disabled={false}
           />
         </div>
         {selectedItems.length > 0 && (
