@@ -29,15 +29,17 @@ function ItemView(item: Item) {
   }, [item, setCurrentItem]);
 
   return (
-    <div className="bg-white p-4 border border-gray-300 w-full h-full">
-      <h2>Current Item: {item.name}</h2>
-      <h3>Type: {item.type}</h3>
-      <div className="item">
-        {/* {item.type == "directory" && <DirectoryView directory={item} />} */}
-        {item.type == "directory" && <Playground directory={item} item={item} path={path} goToEnclosingFolder={goToEnclosingFolder} />}
-        {item.type == "note" && <NoteView note={item} />}
-      </div>
-    </div>
+    <>
+      {item.type == "directory" && (
+        <Playground
+          directory={item}
+          item={item}
+          path={path}
+          goToEnclosingFolder={goToEnclosingFolder}
+        />
+      )}
+      {item.type == "note" && <NoteView note={item} />}
+    </>
   );
 }
 

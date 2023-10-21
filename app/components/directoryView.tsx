@@ -96,7 +96,7 @@ const DirectoryView: React.FC<DirectoryViewProps> = ({
               <td className="w-8 px-3 whitespace-nowrap">
                 <input
                   type="checkbox"
-                  className="form-checkbox h-3 w-3 text-blue-600"
+                  className="form-checkbox h-3 w-3"
                   checked={selectedItems.includes(childItem.name)}
                   onChange={() => toggleSelection(childItem.name)}
                 />

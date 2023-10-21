@@ -7,20 +7,10 @@ import Playground  from './playground'
 import '../globals.css';
 import "xp.css/dist/XP.css";
 
-import Layout from './Layout';
-
-
-function Header() {
-    return (
-        <header className='bg-[#0654E4] py-2 px-6'>
-            <h1 className='text-white'>Quilt Labs Notes Filesystem App</h1>
-        </header>
-    );
-}
-
 export default function ReactApp() {
     return (
         <main>
+            <Workspace />
         </main>
     );
 }

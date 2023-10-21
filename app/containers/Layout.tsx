@@ -6,19 +6,21 @@ function Layout() {
   const windowButtons = ["Minimize", "Restore", "Close"];
 
   const leftDots = (numberOfDots: number) => {
-    return Array(numberOfDots).fill(null).map((dot, idx) => (
+    return Array(numberOfDots)
+      .fill(null)
+      .map((dot, idx) => (
         <div
-                key={idx}
-                style={{
-                  width: 3,
-                  height: 3,
-                  borderRadius: 50,
-                  margin: 3,
-                  backgroundColor: "#b1adab",
-                }}
-              ></div>
-    ))
-            }
+          key={idx}
+          style={{
+            width: 3,
+            height: 3,
+            borderRadius: 50,
+            margin: 3,
+            backgroundColor: "#b1adab",
+          }}
+        ></div>
+      ));
+  };
   return (
     <div className="grid-flow-row auto-rows-max">
       <div className="header border">
@@ -43,26 +45,28 @@ function Layout() {
         </div>
       </div>
       <div className="navbar border">
-        <div className="flex">
-          <div>
-            {
-             leftDots(4)   
-            }
+        {/* File Menu */}
+        <div>
+          <div className="flex">
+            <div>{leftDots(4)}</div>
+            {menuOptions &&
+              menuOptions.map((item, idx) => (
+                <label key={idx} className="mx-2">
+                  {item}
+                </label>
+              ))}
           </div>
-          {menuOptions &&
-            menuOptions.map((item, idx) => (
-              <label key={idx} className="mx-2">
-                {item}
-              </label>
-            ))}
         </div>
+        {/* Actions Buttons */}
+        <div></div>
+        {/* Address Bar */}
         <div></div>
       </div>
       <div className="grid grid-cols-4 main-layout">
         <div className="col-span-1 border">
-            <div className="p-10" style={{backgroundColor: '#7da7f0'}}>
-                <SideTaskItem />
-            </div>
+          <div className="p-10" style={{ backgroundColor: "#7da7f0" }}>
+            <SideTaskItem />
+          </div>
         </div>
         <div className="border">ML2</div>
       </div>

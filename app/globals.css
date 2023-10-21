@@ -20,3 +20,12 @@ body {
   color: rgb(var(--foreground-rgb));
   background: #F5F6FA;
 }
+
+input[type=checkbox] {
+  position: relative !important;
+  appearance: checkbox !important;
+  top: 3px;
+  opacity: 100 !important;
+  border: 1px solid black !important;
+  border-radius: 2px;
+}
