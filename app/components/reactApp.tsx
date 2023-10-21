@@ -3,6 +3,9 @@
 import React, {useEffect, useState} from 'react';
 import { Workspace } from './workspace';
 
+import '../globals.css';
+
+
 function Header() {
     return (
         <header>
