@@ -4,4 +4,5 @@ export interface Item {
     parent?: Item
     note?: string
     items?: Item[]
+    dateModified?: string
 }
