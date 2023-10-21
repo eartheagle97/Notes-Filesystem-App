@@ -5,6 +5,9 @@ import { Workspace } from './workspace';
 import Playground  from './playground'
 
 import '../globals.css';
+import "xp.css/dist/XP.css";
+
+import Layout from './Layout';
 
 
 function Header() {
@@ -18,9 +21,10 @@ function Header() {
 export default function ReactApp() {
     return (
         <main>
-            <Header />
+            {/* <Header />
             <Playground />
-            <Workspace />
+            <Workspace /> */}
+            <Layout />
         </main>
     );
 }
