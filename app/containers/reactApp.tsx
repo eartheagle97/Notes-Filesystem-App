@@ -21,10 +21,6 @@ function Header() {
 export default function ReactApp() {
     return (
         <main>
-            {/* <Header />
-            <Playground />
-            <Workspace /> */}
-            <Layout />
         </main>
     );
 }
