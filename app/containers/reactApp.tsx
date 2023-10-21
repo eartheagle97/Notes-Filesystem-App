@@ -18,8 +18,7 @@ function Header() {
 export default function ReactApp() {
     return (
         <main>
-            <Header />
-            <Workspace />
+            
         </main>
     );
 }
