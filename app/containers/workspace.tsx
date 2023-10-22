@@ -1,7 +1,8 @@
-import React, { useState, useContext, useCallback } from "react";
+import React, { useState, useContext, useCallback, useEffect } from "react";
 import { Item } from "./types";
 import NoteView from "./noteView";
 import { format } from "date-fns";
+import Bootloader from '../components/bootLoader'
 
 import _ from "lodash";
 
@@ -10,6 +11,16 @@ import Playground from "./playground";
 
 function ItemView(item: Item) {
   const { setCurrentItem, path, setPath } = useContext(WorkspaceContext);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 5000); // 5000 milliseconds = 5 seconds. Adjust to 7000 for 7 seconds.
+
+    // Cleanup function to clear the timeout when the component is unmounted.
+    return () => clearTimeout(timer);
+  }, []);
 
   const goToEnclosingFolder = useCallback(() => {
     if (item.parent == null) {
@@ -27,13 +38,16 @@ function ItemView(item: Item) {
 
   return (
     <>
-      <Playground
-        directory={item}
-        item={item}
-        path={path}
-        goToEnclosingFolder={goToEnclosingFolder}
-      />
-      {/* {item.type == "note" && <NoteView note={item} />} */}
+      {isLoading ? (
+        <Bootloader />
+      ) : (
+        <Playground
+          directory={item}
+          item={item}
+          path={path}
+          goToEnclosingFolder={goToEnclosingFolder}
+        />
+      )}
     </>
   );
 }
@@ -162,15 +176,12 @@ export function Workspace() {
       return newItem;
     });
     setCurrentItem((prevItem) => {
-      if (prevItem?.parent?.type === 'directory') {
+      if (prevItem?.parent?.type === "directory") {
         return _.cloneDeep(prevItem.parent);
       }
       return _.cloneDeep(prevItem);
     });
-    
   }, []);
-
-  console.log(currentItem)
 
   return (
     <div className="workspace">

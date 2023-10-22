@@ -84,6 +84,14 @@ const DirectoryView: React.FC<DirectoryViewProps> = ({
       name: "Open",
       icon: "",
       underline: "",
+      onclick: () => {
+        const clickedItem = sortedDirectories
+          .concat(sortedNotes)
+          .find((item) => item.name === contextMenu.selectedItem);
+        if (clickedItem) {
+          handleItemClick(clickedItem);
+        }
+      },
     },
     {
       name: "Explore",
@@ -150,24 +158,28 @@ const DirectoryView: React.FC<DirectoryViewProps> = ({
 
   return (
     <>
-      <table className="w-full">
+      <table className="w-full break-words">
         <thead className="bg-[#EFECDE] text-sm text-left drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
           <tr className="">
             <th className="w-8 px-3 border-r border-[#D4D0C3]"></th>
-            <th className="w-1/2 py-1 font-normal border-r border-[#D4D0C3] pl-2">
-            <label>Name</label>
+            <th className="py-1 font-normal border-r border-[#D4D0C3] pl-2">
+              <label>Name</label>
             </th>
-            <th className="font-normal border-r border-[#D4D0C3] pl-2"><label>Type</label></th>
+            <th className="font-normal border-r border-[#D4D0C3] pl-2">
+              <label>Type</label>
+            </th>
             <th className="font-normal border-r border-[#D4D0C3] pl-2">
               <label>Date Modified</label>
             </th>
-            <th className="font-normal pl-2 md:hidden">Actions</th>
+            <th className="font-normal pl-2 md:hidden">
+              <label>Actions</label>
+            </th>
           </tr>
         </thead>
         <tbody>
           {sortedDirectories.concat(sortedNotes).map((childItem, index) => (
             <tr className="dirItem hover:bg-transparent" key={index}>
-              <td className="w-8 px-3 py-2 whitespace-nowrap">
+              <td className="w-8 px-3 py-1 whitespace-nowrap">
                 <input
                   type="checkbox"
                   className="form-checkbox h-3 w-3"
@@ -177,7 +189,7 @@ const DirectoryView: React.FC<DirectoryViewProps> = ({
               </td>
               <td
                 onContextMenu={(e) => handleContextMenu(e, childItem.name)}
-                className="w-1/2 py-1 pl-2 whitespace-nowrap bg-[#F7F7F7]"
+                className="py-1 pl-2 whitespace-nowrap bg-[#F7F7F7]"
                 onClick={() => handleItemClick(childItem)}
               >
                 <div className="flex items-center">
@@ -207,20 +219,20 @@ const DirectoryView: React.FC<DirectoryViewProps> = ({
               <td>
                 <label className="text-sm mx-2">{childItem.dateModified}</label>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap md:hidden">
+              <td className="py-4 whitespace-nowrap md:hidden">
                 <button
-                  className="mx-1"
+                  className="mx-1 bg-none border-none min-w-0 px-0.5"
                   onClick={() =>
                     handleRenameItem(childItem.name, childItem.type)
                   }
                 >
-                  <FiEdit className="text-xl text-blue-600" />
+                  <FiEdit className="text-sm text-blue-600" />
                 </button>
                 <button
-                  className="mx-1"
+                  className="mx-1 bg-none border-none min-w-0 px-0.5"
                   onClick={() => handleDeleteItems(childItem.name)}
                 >
-                  <FiTrash2 className="text-xl text-red-600" />
+                  <FiTrash2 className="text-sm text-red-600" />
                 </button>
               </td>
             </tr>
@@ -245,7 +257,10 @@ const DirectoryView: React.FC<DirectoryViewProps> = ({
           {rightclick.map((item, index) => {
             return (
               <>
-                <div className={`flex items-center hover:bg-[#f1f1f1]`}>
+                <div
+                  className={`flex items-center hover:bg-[#f1f1f1]`}
+                  onClick={item.onclick}
+                >
                   {item.icon ? (
                     <Image
                       className="absolute ml-1.5"
@@ -257,9 +272,7 @@ const DirectoryView: React.FC<DirectoryViewProps> = ({
                   ) : (
                     ""
                   )}
-                  <label className={`ml-8 my-1 text-sm`} onClick={item.onclick}>
-                    {item.name}
-                  </label>
+                  <label className={`ml-8 my-1 text-sm`}>{item.name}</label>
                 </div>
                 {item.underline ? (
                   <div className="border-b my-1 border-gray-300"></div>

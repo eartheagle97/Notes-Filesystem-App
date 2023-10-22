@@ -51,3 +51,31 @@ The `Workspace` component provides a `React.Context` through which child compone
 **Questions**
 
 If there are any questions or issues about the starter code, please reach out to `support@quiltlabs.ai` and we will respond ASAP. Good luck!
+
+**Challenges Faced**
+1. Windows XP UI Theme: The program UI was designed using the Windows XP look, which requires a keen eye for detail. Matching the styles, typefaces, icons, and general look and feel of Windows XP while maintaining current usability and responsiveness presented a unique challenge.
+
+2. Context Menu for Directories and Notes: Creating a right-click context menu that adjusts dynamically based on whether a directory or a note was clicked was a challenge. We handled this by setting context state when a right-click event occurs and then displaying options accordingly.
+
+3. Recursive Directory Navigation: Handling the recursive nature of directories and allowing for deep nested navigation required careful state management and prop drilling.
+
+4. Audio Playback on Boot: Autoplay policies in modern browsers meant that audio wouldn't play automatically on page load. We implemented various solutions and fallbacks to ensure the audio plays, considering user interactions.
+
+
+**Future Improvements:**
+1. Drag and Drop: Implement a drag and drop feature for moving files and directories.
+
+2. Search Functionality: Allow users to search for specific notes or directories.
+
+3. Improved Audio Handling: Use an audio library or further refine the audio handling to ensure consistent behavior across all browsers and devices.
+
+4. Advanced Context Menus: Implement more advanced context menu features such as "Copy", "Paste", and "Move To".
+
+**Major Libraries Used:**
+1. react: For building the user interface.
+2. next: For routing and image optimizations.
+3. lodash: Utility library for deep cloning and other utilities.
+4. date-fns: Modern JavaScript date utility library.
+5. react-icons: Easily include popular icons in your React projects.
+6. react-modal: Accessible modal dialog component for React.
+7. xp.css: Modern CSS framework with Windows XP styles.

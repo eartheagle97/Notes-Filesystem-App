@@ -188,8 +188,10 @@ const Playground: React.FC<PlaygroundProps> = ({
             style={{ paddingTop: 18, paddingBottom: 18 }}
           >
             <div className="title-bar-text text-[16px] ml-2">
-              <label className="text-sm">Quilt Labs Notes Filesystem App &gt;&gt; ({item?.name} :{" "}
-              {item?.type})</label>
+              <label className="text-[10px] md:text-base truncate block max-w-xs md:max-w-md lg:max-w-full">
+                Quilt Labs Notes Filesystem App &gt;&gt; ({item?.name} :{" "}
+                {item?.type})
+              </label>
             </div>
             <div className="title-bar-controls">
               {windowButtons?.map((button, idx) => (
@@ -229,8 +231,8 @@ const Playground: React.FC<PlaygroundProps> = ({
             />
           </div>
         </div>
-        <div className="grid grid-cols-4 main-layout h-[75vh]">
-          <div className="col-span-1 border ">
+        <div className="grid grid-cols-1 lg:grid-cols-4 main-layout h-[75vh]">
+          <div className="hidden lg:grid lg:col-span-1 border">
             <div
               className="p-5 h-[75vh]"
               style={{ backgroundColor: "#7da7f0" }}
@@ -253,8 +255,9 @@ const Playground: React.FC<PlaygroundProps> = ({
             />
           </div>
         </div>
+
         {/* Start Bar */}
-        <div className="title-bar !h-[5.75vh]">
+        <div className="title-bar !h-[5.75vh] sticky bottom-0 z-50">
           <div className="flex items-center h-[100%] w-[100px] rounded !bg-green-600 text-white text-xl">
             <div className="flex items-center ml-2">
               <Image
@@ -283,7 +286,7 @@ const Playground: React.FC<PlaygroundProps> = ({
           setCurrentItem={setCurrentItem}
           item={item}
         />
-      </Modal>      
+      </Modal>
     </>
   );
 };

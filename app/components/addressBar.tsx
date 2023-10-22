@@ -48,6 +48,7 @@ const AddressBar: React.FC<AddressBarProps> = ({
       alt: "My Computer",
       label: "My Computer",
       className: "mr-2",
+      BtnClass: "border-r-2 border-gray-400 rounded-none"
     },
     {
       id: "searchButton",
@@ -71,6 +72,7 @@ const AddressBar: React.FC<AddressBarProps> = ({
       label: "New File",
       className: "ml-2",
       onClick: handleAddNote,
+      BtnClass: "border-r-2 border-gray-400 rounded-none"
     },
   ];
 
@@ -78,33 +80,19 @@ const AddressBar: React.FC<AddressBarProps> = ({
     <>
       <div className="flex bg-[#EFECDE] border-y border-gray-300">
         <div>{leftDots(8)}</div>
-        <div className="flex items-center py-1">
-          <div className="flex items-center py-2 border-r-2 border-gray-300">
-            {buttonsConfig.slice(0, 3).map((button, index) => (
-              <IconTextButton
-                key={button.id}
-                src={button.src}
-                alt={button.alt}
-                label={button.label}
-                className={button.className}
-                onClick={button.onClick}
-                disabled={button.disabled}
-              />
-            ))}
-          </div>
-          <div className="flex items-center pr-4 border-r-2 border-gray-300">
-            {buttonsConfig.slice(3).map((button, index) => (
-              <IconTextButton
-                key={button.id} // to ensure unique keys
-                src={button.src}
-                alt={button.alt}
-                label={button.label}
-                className={button.className}
-                onClick={button.onClick}
-                disabled={button.disabled}
-              />
-            ))}
-          </div>
+        <div className="grid grid-cols-3 md:flex md:items-center gap-4 md:gap-0 py-1">
+          {buttonsConfig.map((button, index) => (
+            <IconTextButton
+              key={button.id}
+              src={button.src}
+              alt={button.alt}
+              label={button.label}
+              className={button.className}
+              BtnClass={button.BtnClass}
+              onClick={button.onClick}
+              disabled={button.disabled}
+            />
+          ))}
           {selectedItems.length > 0 && (
             <IconTextButton
               src={"/assets/img/Recycle.png"}
