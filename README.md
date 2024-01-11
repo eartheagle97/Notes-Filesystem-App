@@ -1,4 +1,4 @@
-# Quilt Labs - Notes Filesystem App Challenge
+# Notes Filesystem App
 
 ## Running the code
 
@@ -79,3 +79,11 @@ If there are any questions or issues about the starter code, please reach out to
 5. react-icons: Easily include popular icons in your React projects.
 6. react-modal: Accessible modal dialog component for React.
 7. xp.css: Modern CSS framework with Windows XP styles.
+
+## Support
+
+If you enjoyed Notes Filesystem App and would like to support the development, consider buying me a coffee! ☕️
+
+[![Buy Me a Coffee](https://camo.githubusercontent.com/12f516d86d600c89a6abd2326256045c27325ad7c8532c0d36772965a4923be0/68747470733a2f2f7777772e6275796d6561636f666665652e636f6d2f6173736574732f696d672f637573746f6d5f696d616765732f6f72616e67655f696d672e706e67)](https://www.buymeacoffee.com/kairavpateu)
+
+Your support helps keep the adventure alive! 🚀
