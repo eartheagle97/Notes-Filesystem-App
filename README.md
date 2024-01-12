@@ -48,10 +48,6 @@ The `Workspace` component provides a `React.Context` through which child compone
 | addDirectory   | Function     | Creates a new directory given a `newDirName`, if the `currentItem` is a directory.         |
 | updateNote     | Function     | Updates the `note` text of the `currentItem`, if it is a note.                             |
 
-**Questions**
-
-If there are any questions or issues about the starter code, please reach out to `support@quiltlabs.ai` and we will respond ASAP. Good luck!
-
 **Challenges Faced**
 1. Windows XP UI Theme: The program UI was designed using the Windows XP look, which requires a keen eye for detail. Matching the styles, typefaces, icons, and general look and feel of Windows XP while maintaining current usability and responsiveness presented a unique challenge.
 
